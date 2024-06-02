@@ -54,6 +54,12 @@ Esta é uma aplicação FastAPI que fornece informações meteorológicas. A apl
     docker-compose down
     ```
 
+- **Rodar os contêineres em modo background:**
+
+    ```sh
+    docker-compose up -d
+    ```
+
 - **Ver logs dos contêineres:**
 
     ```sh
