@@ -4,9 +4,9 @@ from app.schemas.weather import WeatherReq
 from app.controllers.weather import WeatherController
 from app.services.weather import WeatherService
 
-def get_weather_service():
+def getWeatherService():
     return WeatherService()
 
 @app.get("/weather")
-async def weatherReq(req: WeatherReq, weather_service: WeatherService = Depends(get_weather_service)):
-    return await WeatherController.get(req, weather_service)
+async def weatherReq(req: WeatherReq, weatherService: WeatherService = Depends(getWeatherService)):
+    return await WeatherController.get(req, weatherService)
