@@ -19,7 +19,7 @@ class WeatherService:
             self.client = MongoClient(f"mongodb://{MONGODB_USER}:{MONGODB_PASS}@{MONGODB_HOST}:{MONGODB_PORT}/")
             
         except Exception as e:
-            print(e)
+            raise e
 
     async def process_request(self, request):
 
