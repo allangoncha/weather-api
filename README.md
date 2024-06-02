@@ -13,7 +13,7 @@ Esta é uma aplicação FastAPI que fornece informações meteorológicas. A apl
 1. **Clone o repositório:**
 
     ```sh
-    git clone https://github.com/seu-usuario/weather-api.git
+    git clone https://github.com/allangoncha/weather-api.git
     cd weather-api
     ```
 
