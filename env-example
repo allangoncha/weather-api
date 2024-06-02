@@ -1,0 +1,6 @@
+url=https://api.openweathermap.org/data/2.5/forecast?
+api_key=SUA_API_KEY_AQUI
+mongodb_host=localhost
+mongodb_port=27017
+mongodb_user=root
+mongodb_pass=root
