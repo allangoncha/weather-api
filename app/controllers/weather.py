@@ -1,7 +1,5 @@
 from app.services.weather import WeatherService
 
-ws = WeatherService()
-
 class WeatherController:
-    async def get(req):
-        return await ws.process_request(req)
+    async def get(req, weather_service: WeatherService):
+        return await weather_service.process_request(req)
