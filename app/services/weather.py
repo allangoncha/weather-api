@@ -22,7 +22,7 @@ class WeatherService:
             else:
                 #Init MongoClient
                 self.client = MongoClient()
-                self.client = MongoClient(f"mongodb://{MONGODB_USER}:{MONGODB_PASS}@localhost:{MONGODB_PORT}/")
+                self.client = MongoClient(f"mongodb://{MONGODB_USER}:{MONGODB_PASS}@{MONGODB_HOST}:{MONGODB_PORT}/")
             
         except Exception as e:
             logger.error("Erro ao inicializar o cliente MongoDB", exc_info=True)
