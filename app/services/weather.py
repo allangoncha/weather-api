@@ -41,11 +41,16 @@ class WeatherService:
         response = requests.request("GET", URL, params=params)
 
         if response.status_code == 200:
-            logger.info("Requisição bem-sucedida. Inserindo dados no banco de dados.")
-            res = json.loads(response.text)
-            inserted_id = collection.insert_one(res).inserted_id
-            res['_id'] = str(inserted_id)
-            return res
+
+            try:
+                logger.info("Requisição bem-sucedida. Inserindo dados no banco de dados.")
+                res = json.loads(response.text)
+                inserted_id = collection.insert_one(res).inserted_id
+                res['_id'] = str(inserted_id)
+                return res
+            
+            except Exception as e:
+                raise e
         
         else:
             logger.error("Erro de retorno da openweatherapi. Status code: %s", response.status_code)
@@ -53,4 +58,10 @@ class WeatherService:
                 "msg": "Erro de retorno openweatherapi",
                 "status": response.status_code,
             }}
-        
+    
+    def close_connection(self):
+        try:
+            self.client.close()
+            logger.info("Conexão com o MongoDB fechada com sucesso")
+        except Exception as e:
+            logger.error("Erro ao fechar a conexão com o MongoDB", exc_info=True)
