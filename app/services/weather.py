@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from pymongo import MongoClient
-import os, requests, json, logging, sys
+import os, requests, json, logging, sys, mongomock
 
 load_dotenv()
 URL = os.getenv("url")
@@ -17,9 +17,12 @@ class WeatherService:
     def __init__(self):
 
         try:
-            #Init MongoClient
-            self.client = MongoClient()
-            self.client = MongoClient(f"mongodb://{MONGODB_USER}:{MONGODB_PASS}@{MONGODB_HOST}:{MONGODB_PORT}/")
+            if os.getenv("SAVE_TO_MONGO") == "True":
+                self.client = mongomock.MongoClient()
+            else:
+                #Init MongoClient
+                self.client = MongoClient()
+                self.client = MongoClient(f"mongodb://{MONGODB_USER}:{MONGODB_PASS}@{MONGODB_HOST}:{MONGODB_PORT}/")
             
         except Exception as e:
             logger.error("Erro ao inicializar o cliente MongoDB", exc_info=True)
