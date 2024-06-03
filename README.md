@@ -74,7 +74,22 @@ Esta é uma aplicação FastAPI que fornece informações meteorológicas. A apl
 
 ## Testes
 
-- **Para executar os testes em /app/tests execute:**
+- **Para executar os testes fora do container, crie um ambiente virtual utilizando o comando abaixo:**
+
+    ```sh
+    python3 -m venv .venv
+    ```
+- **Entre no seu ambiente virtual usando o comando:**
+
+    ```sh
+    source .venv/bin/activate
+    ```
+- **Instale as dependências do projeto:**
+
+    ```sh
+    pip install requirements.txt
+    ```
+- **E em /app/tests execute:**
 
     ```sh
     pytest
