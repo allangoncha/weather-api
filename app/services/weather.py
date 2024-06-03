@@ -22,7 +22,7 @@ class WeatherService:
             else:
                 #Init MongoClient
                 self.client = MongoClient()
-                self.client = MongoClient(f"mongodb://{MONGODB_USER}:{MONGODB_PASS}@{MONGODB_HOST}:{MONGODB_PORT}/")
+                self.client = MongoClient(f"mongodb://{MONGODB_USER}:{MONGODB_PASS}@localhost:{MONGODB_PORT}/")
             
         except Exception as e:
             logger.error("Erro ao inicializar o cliente MongoDB", exc_info=True)
@@ -61,6 +61,49 @@ class WeatherService:
                 "msg": "Erro de retorno openweatherapi",
                 "status": response.status_code,
             }}
+    
+    async def process_request_city(self, request):
+        logger.info("Realizando requisição para obter dados do clima do histórico da base de dados.")
+        db = self.client['weather']
+        collection = db['weather_datas']
+        try:
+            res = collection.find_one({'city.name': request.city})
+            
+            if res:
+                res['_id'] = str(res['_id'])
+                logger.info("Requisição bem-sucedida.")
+                return res
+            else:
+                logger.info("Nenhum documento encontrado para a cidade especificada.")
+                return {"msg": "Nenhum documento encontrado para a cidade especificada."}
+
+        except Exception as e:
+            logger.error("Erro de retorno.")
+            return e
+    
+    async def process_request_history(self, request):
+        logger.info("Realizando requisição para histórico dos dados de clima da base de dados.")
+        db = self.client['weather']
+        collection = db['weather_datas']
+
+        try:
+            res = collection.find({}).limit(request.limit)
+            
+            results = []
+            for registers in res:
+                registers['_id'] = str(registers['_id'])
+                results.append(registers)
+
+            if results:
+                logger.info("Requisição bem-sucedida. Retornando dados limitados.")
+                return results
+            else:
+                logger.info("Nenhum documento encontrado.")
+                return []
+
+        except Exception as e:
+            logger.error("Erro de retorno.")
+            return e
     
     def close_connection(self):
         try:

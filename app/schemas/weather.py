@@ -6,3 +6,9 @@ class WeatherReq(BaseModel):
     lon: float
     cnt: int
     units: Optional[str] = 'metric'
+
+class WeatherReqByCity(BaseModel):
+    city: str
+
+class WeatherReqHistory(BaseModel):
+    limit: int
