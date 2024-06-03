@@ -67,15 +67,20 @@ class WeatherService:
         db = self.client['weather']
         collection = db['weather_datas']
         try:
-            res = collection.find_one({'city.name': request.city})
+            res = collection.find({'city.name': request.city}).limit(50)
             
-            if res:
+            results = []
+            for registers in res:
+                registers['_id'] = str(registers['_id'])
+                results.append(registers)
+            
+            if results:
                 res['_id'] = str(res['_id'])
                 logger.info("Requisição bem-sucedida.")
                 return res
             else:
                 logger.info("Nenhum documento encontrado para a cidade especificada.")
-                return {"msg": "Nenhum documento encontrado para a cidade especificada."}
+                return []
 
         except Exception as e:
             logger.error("Erro de retorno.")
