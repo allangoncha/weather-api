@@ -72,6 +72,14 @@ Esta é uma aplicação FastAPI que fornece informações meteorológicas. A apl
     docker-compose exec app sh
     ```
 
+## Testes
+
+- **Para executar os testes em /app/tests execute:**
+
+    ```sh
+    pytest
+    ```
+
 ## Observações
 
 - Certifique-se de que as variáveis de ambiente no arquivo `.env` estejam corretas para a conexão com o MongoDB e a API externa.
